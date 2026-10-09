@@ -64,6 +64,7 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor frontRightDrive = null;
     private DcMotor backRightDrive = null;
     private DcMotor intake = null;
+    private DcMotor windmill = null;
 
 
     /*
@@ -76,13 +77,15 @@ public class BasicOpMode_Iterative extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeft");
-        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeft");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
-        backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
+       // frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeft");
+       // backLeftDrive = hardwareMap.get(DcMotor.class, "backLeft");
+        //frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
+       // backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
         intake = hardwareMap.get(DcMotor.class,"intake");
         double intakePower;
         intake.setZeroPowerBehavior(BRAKE);
+        windmill = hardwareMap.get(DcMotor.class,"windmill");
+        windmill.setPower(0);
 
 
         // ########################################################################################
@@ -95,10 +98,11 @@ public class BasicOpMode_Iterative extends OpMode
         // when you first test your robot, push the left joystick forward and observe the direction the wheels turn.
         // Reverse the direction (flip FORWARD <-> REVERSE ) of any wheel that runs backward
         // Keep testing until ALL the wheels move the robot forward when you push the left joystick forward.
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+       /* frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        backRightDrive.setDirection(DcMotor.Direction.FORWARD);*/
+        windmill.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         // Tell the driver that initialization is complete.
@@ -135,16 +139,18 @@ public class BasicOpMode_Iterative extends OpMode
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
-        double frontLeftPower  = axial + lateral + yaw;
+        /*double frontLeftPower  = axial + lateral + yaw;
         double frontRightPower = axial - lateral - yaw;
         double backLeftPower   = axial - lateral + yaw;
-        double backRightPower  = axial + lateral - yaw;
+        double backRightPower  = axial + lateral - yaw;*/
+        boolean windmill = gamepad1.b;
+
 
 
 
         // Normalize the values so no wheel power exceeds 100%
         // This ensures that the robot maintains the desired motion.
-        max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
+        /*max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
         max = Math.max(max, Math.abs(backLeftPower));
         max = Math.max(max, Math.abs(backRightPower));
 
@@ -173,10 +179,11 @@ public class BasicOpMode_Iterative extends OpMode
             */
 
         // Send calculated power to wheels
-        frontLeftDrive.setPower(frontLeftPower);
+        /*frontLeftDrive.setPower(frontLeftPower);
         frontRightDrive.setPower(frontRightPower);
         backLeftDrive.setPower(backLeftPower);
         backRightDrive.setPower(backRightPower);
+
 
 
         // Show the elapsed game time and wheel power.
@@ -186,7 +193,7 @@ public class BasicOpMode_Iterative extends OpMode
         telemetry.update();
 
         intake.setPower( gamepad1.left_trigger - gamepad1.right_trigger);
-
+*/
     }
 
     /*
