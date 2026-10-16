@@ -35,7 +35,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -61,12 +63,15 @@ public class BasicOpMode_Iterative extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontLeftDrive = null;
     private DcMotor backLeftDrive = null;
+    private DcMotorEx launcher = null;
     private DcMotor frontRightDrive = null;
     private DcMotor backRightDrive = null;
     private DcMotor intake = null;
     private DcMotor windmill = null;
 
 
+    public final int LAUNCHER_TARGET_VELOCITY = 1250;
+    public final int LAUNCHER_MIN_VELOCITY = 1200;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -84,6 +89,7 @@ public class BasicOpMode_Iterative extends OpMode
         intake = hardwareMap.get(DcMotor.class,"intake");
         double intakePower;
         intake.setZeroPowerBehavior(BRAKE);
+        launcher = hardwareMap.get(DcMotorEx.class, "launcher");
         windmill = hardwareMap.get(DcMotor.class,"windmill");
         windmill.setPower(0);
 
@@ -104,6 +110,9 @@ public class BasicOpMode_Iterative extends OpMode
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);*/
         windmill.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -194,6 +203,7 @@ public class BasicOpMode_Iterative extends OpMode
 
         intake.setPower( gamepad1.left_trigger - gamepad1.right_trigger);
 */
+        launch();
     }
 
     /*
@@ -202,5 +212,24 @@ public class BasicOpMode_Iterative extends OpMode
     @Override
     public void stop() {
     }
+ if (gamepad1.right_bumper) {
+    launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+} else {
+    launcher.setVelocity(0);
+}
 
+    /*
+     * Here we ask if the driver is currently pressing the right bumper, AND the launcher is
+     * spinning fast enough to make a successful shot. If it is, then we will turn on the
+     * windmill servo to start feeding the elements into the launcher motor. We also
+     * add some power to the intake power. This can sometimes help dislodge stuck elements from
+     * inside the hopper.
+     */
+        if (gamepad1.right_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
+    windmillServo.setPower(1);
+    intakePower += 0.5;
+} else {
+    windmillServo.setPower(0);
+}
+}  
 }
