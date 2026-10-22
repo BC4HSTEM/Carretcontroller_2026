@@ -34,12 +34,9 @@ import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -68,12 +65,11 @@ public class BasicOpMode_Iterative extends OpMode {
     private DcMotor frontRightDrive = null;
     private DcMotor backRightDrive = null;
     private DcMotor intake = null;
-    private CRServo windmill = null;
+    private DcMotor windmill = null;
 
 
     public final int LAUNCHER_TARGET_VELOCITY = 1250;
     public final int LAUNCHER_MIN_VELOCITY = 1200;
-
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -84,16 +80,16 @@ public class BasicOpMode_Iterative extends OpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        // frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeft");
-        // backLeftDrive = hardwareMap.get(DcMotor.class, "backLeft");
+       // frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeft");
+       // backLeftDrive = hardwareMap.get(DcMotor.class, "backLeft");
         //frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
-        // backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
-        intake = hardwareMap.get(DcMotor.class, "intake");
+       // backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
+        intake = hardwareMap.get(DcMotor.class,"intake");
         double intakePower;
         intake.setZeroPowerBehavior(BRAKE);
         launcher = hardwareMap.get(DcMotorEx.class, "launcher");
-        windmill = hardwareMap.get(CRServo.class, "windmill");
-        windmill.setPower(0.0);
+        windmill = hardwareMap.get(DcMotor.class,"windmill");
+        windmill.setPower(0);
 
 
         // ########################################################################################
@@ -110,11 +106,10 @@ public class BasicOpMode_Iterative extends OpMode {
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);*/
-        windmill.setDirection(CRServo.Direction.REVERSE);
+        windmill.setDirection(DcMotorSimple.Direction.REVERSE);
 
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -144,30 +139,32 @@ public class BasicOpMode_Iterative extends OpMode {
         double max;
 
         // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-        double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-        double lateral = gamepad1.left_stick_x;
-        double yaw = gamepad1.right_stick_x;
+        double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+        double lateral =  gamepad1.left_stick_x;
+        double yaw     =  gamepad1.right_stick_x;
+
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
-        double frontLeftPower = axial + lateral + yaw;
+        double frontLeftPower  = axial + lateral + yaw;
         double frontRightPower = axial - lateral - yaw;
-        double backLeftPower = axial - lateral + yaw;
-        double backRightPower = axial + lateral - yaw;
-        boolean windmillButton = gamepad1.b;
+        double backLeftPower   = axial - lateral + yaw;
+        double backRightPower  = axial + lateral - yaw;
+
+
 
 
         // Normalize the values so no wheel power exceeds 100%
         // This ensures that the robot maintains the desired motion.
-        max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
+        /*max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
         max = Math.max(max, Math.abs(backLeftPower));
         max = Math.max(max, Math.abs(backRightPower));
 
         if (max > 1.0) {
-            frontLeftPower /= max;
+            frontLeftPower  /= max;
             frontRightPower /= max;
-            backLeftPower /= max;
-            backRightPower /= max;
+            backLeftPower   /= max;
+            backRightPower  /= max;
         }
 
         // This is test code:
@@ -181,14 +178,14 @@ public class BasicOpMode_Iterative extends OpMode {
         // Once the correct motors move in the correct direction re-comment this code.
 
 
-        frontLeftPower = gamepad1.x ? 1.0 : 0.0;  // X gamepad
-        backLeftPower = gamepad1.a ? 1.0 : 0.0;  // A gamepad
-        frontRightPower = gamepad1.y ? 1.0 : 0.0;  // Y gamepad
-        backRightPower = gamepad1.b ? 1.0 : 0.0;  // B gamepad
+           /* frontLeftPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
+            backLeftPower   = gamepad1.a ? 1.0 : 0.0;  // A gamepad
+            frontRightPower = gamepad1.y ? 1.0 : 0.0;  // Y gamepad
+            backRightPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad*/
 
 
         // Send calculated power to wheels
-        /*frontLeftDrive.setPower(frontLeftPower);
+        frontLeftDrive.setPower(frontLeftPower);
         frontRightDrive.setPower(frontRightPower);
         backLeftDrive.setPower(backLeftPower);
         backRightDrive.setPower(backRightPower);
@@ -203,7 +200,7 @@ public class BasicOpMode_Iterative extends OpMode {
 
         intake.setPower( gamepad1.left_trigger - gamepad1.right_trigger);
 
-        //launch();
+        launch();
     }
 
     /*
