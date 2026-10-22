@@ -34,6 +34,7 @@ import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -64,8 +65,7 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor frontRightDrive = null;
     private DcMotor backRightDrive = null;
     private DcMotor intake = null;
-    private DcMotor windMill = null;
-
+    private CRServo windMill = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -84,9 +84,9 @@ public class BasicOpMode_Iterative extends OpMode
         intake = hardwareMap.get(DcMotor.class,"intake");
         double intakePower;
         intake.setZeroPowerBehavior(BRAKE);
-        windMill = hardwareMap.get(DcMotor.class,"windmill");
+        windMill = hardwareMap.get(CRServo.class,"windMill");
         windMill.setPower(0);
-        windMill.setZeroPowerBehavior(BRAKE);
+
 
 
 
@@ -139,13 +139,13 @@ public class BasicOpMode_Iterative extends OpMode
         double lateral =  gamepad1.left_stick_x;
         double yaw     =  gamepad1.right_stick_x;
 
+
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
         double frontLeftPower  = axial + lateral + yaw;
         double frontRightPower = axial - lateral - yaw;
         double backLeftPower   = axial - lateral + yaw;
         double backRightPower  = axial + lateral - yaw;
-        boolean windMill = gamepad1.b;
 
 
 
@@ -174,10 +174,10 @@ public class BasicOpMode_Iterative extends OpMode
         // Once the correct motors move in the correct direction re-comment this code.
 
 
-            frontLeftPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
+           /* frontLeftPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
             backLeftPower   = gamepad1.a ? 1.0 : 0.0;  // A gamepad
             frontRightPower = gamepad1.y ? 1.0 : 0.0;  // Y gamepad
-            backRightPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad
+            backRightPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad*/
 
 
         // Send calculated power to wheels
