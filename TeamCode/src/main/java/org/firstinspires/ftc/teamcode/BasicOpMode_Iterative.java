@@ -71,8 +71,8 @@ public class BasicOpMode_Iterative extends OpMode {
     private CRServo windMill = null;
 
 
-    public final int LAUNCHER_TARGET_VELOCITY = 1250;
-    public final int LAUNCHER_MIN_VELOCITY = 1200;
+    public final int LAUNCHER_TARGET_VELOCITY = 3000;
+    public final int LAUNCHER_MIN_VELOCITY = 2700;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -106,11 +106,11 @@ public class BasicOpMode_Iterative extends OpMode {
         // when you first test your robot, push the left joystick forward and observe the direction the wheels turn.
         // Reverse the direction (flip FORWARD <-> REVERSE ) of any wheel that runs backward
         // Keep testing until ALL the wheels move the robot forward when you push the left joystick forward.
-       /* frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);*/
-        windMill.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+
 
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -200,6 +200,9 @@ public class BasicOpMode_Iterative extends OpMode {
         telemetry.update();
 
         intake.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
+
+        windMill.setPower(1);
+
 
         launch();
     }
