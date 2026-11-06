@@ -71,7 +71,7 @@ public class BasicOpMode_Iterative extends OpMode {
     private DcMotor backRightDrive = null;
     private DcMotor intake = null;
     private CRServo windMill = null;
-
+    private boolean isSpining = false;
 
     public static int LAUNCHER_TARGET_VELOCITY = 3000;
     public static int LAUNCHER_MIN_VELOCITY = 2700;
