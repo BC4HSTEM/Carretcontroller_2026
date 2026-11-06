@@ -112,6 +112,7 @@ public class BasicOpMode_Iterative extends OpMode {
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        windMill.setDirection(CRServo.Direction.REVERSE);
 
 
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -216,7 +217,7 @@ public class BasicOpMode_Iterative extends OpMode {
 
         intake.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
 
-        windMill.setPower(1);
+
 
 
         launch();
