@@ -150,6 +150,16 @@ public class BasicOpMode_Iterative extends OpMode {
         double yaw = gamepad1.right_stick_x;
 
 
+
+        if (gamepad1.b && isSpining == false) {
+            windMill.setPower(1);
+            isSpining = true;
+        } else if (gamepad1.b && isSpining == true){
+            windMill.setPower(0);
+            isSpining = false;
+        }
+
+
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
         double frontLeftPower = axial + lateral + yaw;
