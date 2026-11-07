@@ -73,8 +73,8 @@ public class BasicOpMode_Iterative extends OpMode {
     private CRServo windMill = null;
 
 
-    public static int LAUNCHER_TARGET_VELOCITY = 3000;
-    public static int LAUNCHER_MIN_VELOCITY = 2700;
+    public static int LAUNCHER_TARGET_VELOCITY = 1070;
+    public static int LAUNCHER_MIN_VELOCITY = 870;
 
     /*
      * Code to run ONCE when the driver hits INIT
