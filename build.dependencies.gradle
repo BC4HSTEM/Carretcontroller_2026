@@ -1,4 +1,7 @@
-repositories { maven { url = 'https://maven.brott.dev/' }
+repositories {
+
+    maven { url = 'https://maven.brott.dev/' }
+    maven { url = 'https://repo.dairy.foundation/releases/'}
 
     mavenCentral()
     google() // Needed for androidx
