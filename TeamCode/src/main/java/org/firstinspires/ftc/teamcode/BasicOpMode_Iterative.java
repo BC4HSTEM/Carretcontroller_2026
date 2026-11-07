@@ -66,7 +66,7 @@ public class BasicOpMode_Iterative extends OpMode {
     private DcMotor backRightDrive = null;
     private DcMotor intake = null;
     private CRServo windMill = null;
-
+    private boolean isSpining = false;
 
     public static int LAUNCHER_TARGET_VELOCITY = 1070;
     public static int LAUNCHER_MIN_VELOCITY = 870;
@@ -107,6 +107,7 @@ public class BasicOpMode_Iterative extends OpMode {
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        windMill.setDirection(CRServo.Direction.REVERSE);
 
 
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -143,6 +144,16 @@ public class BasicOpMode_Iterative extends OpMode {
         double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
         double lateral = gamepad1.left_stick_x;
         double yaw = gamepad1.right_stick_x;
+
+
+
+        if (gamepad1.b && isSpining == false) {
+            windMill.setPower(1);
+            isSpining = true;
+        } else if (gamepad1.b && isSpining == true){
+            windMill.setPower(0);
+            isSpining = false;
+        }
 
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
@@ -201,7 +212,7 @@ public class BasicOpMode_Iterative extends OpMode {
 
         intake.setPower(gamepad1.left_trigger - gamepad1.right_trigger);
 
-        windMill.setPower(1);
+
 
 
         launch();
