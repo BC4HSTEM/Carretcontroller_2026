@@ -31,43 +31,13 @@ package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-
-package com.example.visualizer;
-import com.owlrobotics.visualizer.PathVisualizer;
-import com.owlrobotics.visualizer.pedropathing.entities.PedroPathingBotEntity;
-import com.owlrobotics.visualizer.pedropathing.paths.*;
-import com.owlrobotics.visualizer.ui.theme.DarkTheme;
-import com.owlrobotics.visualizer.util.enums.Backgrounds;
-import com.owlrobotics.visualizer.util.enums.PlaneOrigin;
-import com.owlrobotics.visualizer.util.enums.RobotImages;
-
-public class MyClass {
-    public static void main(String[] args) {
-        PathVisualizer visualizer = new PathVisualizer(900, 144);
-        PedroPathingBotEntity test = new PedroPathingBotEntity.Builder()
-                .setRobotImage(RobotImages.Pedro_CLASSIC)
-                .setRobotSize(16, 16)
-                .build();
-        test.createNewPath(new PathBuilder()
-                .addPath(new BezierLine(new Pose(56, 8), new Pose(56, 36)))
-                .setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(180))
-                .build());
-        visualizer.setBackground(Backgrounds.Decode_DARK)
-                .setPlaneOrigin(PlaneOrigin.BOTTOM_LEFT);
-    }
-}
 
 /*
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -112,7 +82,7 @@ public class BasicOpMode_Iterative extends OpMode {
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
         frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeft");
-        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeft");y
+        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeft");
         frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
         intake = hardwareMap.get(DcMotor.class, "intake");
