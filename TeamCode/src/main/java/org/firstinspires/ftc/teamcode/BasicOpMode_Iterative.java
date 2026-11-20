@@ -66,10 +66,9 @@ public class BasicOpMode_Iterative extends OpMode {
     private DcMotor backRightDrive = null;
     private DcMotor intake = null;
     private CRServo windMill = null;
-    private boolean isSpining = false;
 
-    public static int LAUNCHER_TARGET_VELOCITY = 1070;
-    public static int LAUNCHER_MIN_VELOCITY = 870;
+    public static int LAUNCHER_TARGET_VELOCITY = 1150;
+    public static int LAUNCHER_MIN_VELOCITY = 950;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -147,13 +146,6 @@ public class BasicOpMode_Iterative extends OpMode {
 
 
 
-        if (gamepad1.b && isSpining == false) {
-            windMill.setPower(1);
-            isSpining = true;
-        } else if (gamepad1.b && isSpining == true){
-            windMill.setPower(0);
-            isSpining = false;
-        }
 
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
