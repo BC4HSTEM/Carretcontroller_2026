@@ -34,11 +34,11 @@ public class Pusher {
         telemetry = robot.telemetry;
     }
 
-    public Command on() {
+    public Command up() {
         return instant(() -> mode = Pusher.Mode.UP).requiring(pusher);
     }
 
-    public Command off() {
+    public Command down() {
         return instant(() -> mode = Mode.DOWN).requiring(pusher);
     }
 

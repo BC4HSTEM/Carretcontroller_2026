@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
-import com.pedropathing.drivetrain.Drivetrain;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -15,7 +14,7 @@ public class Robot {
     public final DriveTrain drivetrain;
     public final Intake intake;
 
-    public final Windmill windmill;
+    public final Feeder feeder;
     public final Pusher pusher;
     public final Launcher launcher;
     //public final Blocker blocker;
@@ -35,7 +34,7 @@ public class Robot {
         pusher = new Pusher(this);
         launcher = new Launcher(this);
         //blocker = new Blocker(this);
-        windmill = new Windmill(this);
+        feeder = new Feeder(this);
         //tapeSensor = new TapeSensor(this);
     }
 }

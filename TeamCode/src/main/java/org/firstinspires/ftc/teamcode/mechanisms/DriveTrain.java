@@ -4,12 +4,16 @@ import static com.pedropathing.ivy.commands.Commands.infinite;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Command;
+import com.pedropathing.math.Pose;
+import com.pedropathing.paths.Path;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.robot.Robot;
+
+import static com.pedropathing.ivy.pedro.PedroCommands.follow;
 
 public class DriveTrain {
 
@@ -44,6 +48,27 @@ public class DriveTrain {
                 turn
         );
         follower.update();
+    }
+
+    public Pose pose() {
+        return follower.pose();
+    }
+
+    public void setPose(Pose pose) {
+        follower.setPose(pose);
+    }
+
+    public void setStartingPose(Pose pose) {
+        setPose(pose);
+    }
+
+    public void usePreviousStartingPose() {
+        //setStartingPose(poseTransfer);
+    }
+
+
+    public Command follow(Path path){
+        return follow(path);
     }
 
     public Command periodic() {

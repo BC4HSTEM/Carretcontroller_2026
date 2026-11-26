@@ -9,57 +9,64 @@ import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.CRServo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @Config
-public class Windmill {
+public class Feeder {
 
     enum Mode {
         ON,
         OFF
     }
-    private CRServo windmill = null;
+    private CRServo feeder = null;
 
     public static double onPower = 1;
     public static double offPower = 0;
 
-    private Windmill.Mode mode = Windmill.Mode.OFF;
+    public static double numberOfShots = 4;
+
+    private double getNumberOfShotsRemaining = 0;
+
+    private Feeder.Mode mode = Feeder.Mode.OFF;
 
     private final Telemetry telemetry;
 
-    public Windmill(Robot robot) {
+    public Feeder(Robot robot) {
 
-        windmill = robot.hardwareMap.get(CRServo.class, "windMill");
-        windmill.setPower(0);
+        feeder = robot.hardwareMap.get(CRServo.class, "windMill");
+        feeder.setPower(0);
 
         telemetry = robot.telemetry;
     }
 
+    public double setGetNumberOfShotsRemaining(){
+        return getNumberOfShotsRemaining;
+    }
+
     public Command on() {
-        return instant(() -> mode = Windmill.Mode.ON).requiring(windmill);
+        return instant(() -> mode = Feeder.Mode.ON).requiring(feeder);
     }
 
     public Command off() {
-        return instant(() -> mode = Windmill.Mode.OFF).requiring(windmill);
+        return instant(() -> mode = Feeder.Mode.OFF).requiring(feeder);
     }
 
     public Command toggle() {
-        return conditional(() -> mode == Windmill.Mode.OFF, on(), off());
+        return conditional(() -> mode == Feeder.Mode.OFF, on(), off());
     }
 
     public Command periodic() {
         return infinite(() -> {
             switch (mode) {
                 case ON:
-                    windmill.setPower(onPower);
+                    feeder.setPower(onPower);
                     break;
                 case OFF:
-                    windmill.setPower(offPower);
+                    feeder.setPower(offPower);
                     break;
             }
 
-            telemetry.addData("Windmill Is On", windmill.getPower());
+            telemetry.addData("Windmill Is On?", feeder.getPower());
 
         });
     }

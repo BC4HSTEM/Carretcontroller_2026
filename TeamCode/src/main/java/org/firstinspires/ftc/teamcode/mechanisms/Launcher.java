@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
+import static com.pedropathing.ivy.commands.Commands.conditional;
 import static com.pedropathing.ivy.commands.Commands.infinite;
+import static com.pedropathing.ivy.commands.Commands.instant;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.ivy.Command;
@@ -12,12 +14,17 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 @Config
 public class Launcher {
 
+    enum Mode {
+        ON,
+        OFF
+    }
     private DcMotorEx launcher = null;
 
     public static int LAUNCHER_TARGET_VELOCITY = 1150;
     public static int LAUNCHER_MIN_VELOCITY = 950;
 
     private boolean on = false;
+    private Launcher.Mode mode = Intake.Mode.OFF;
 
     private final Telemetry telemetry;
 
@@ -36,17 +43,29 @@ public class Launcher {
         on = false;
     }
 
-    public void toggle() {
-        on = !on;
-        if (on) turnOn();
-        else turnOff();
+    public Command on() {
+        return instant(() -> mode = Launcher.Mode.ON).requiring(launcher);
     }
+
+    public Command off() {
+        return instant(() -> mode = Launcher.Mode.OFF).requiring(launcher);
+    }
+
+    public Command toggle() {
+        return conditional(() -> mode == Launcher.Mode.OFF, on(), off());
+    }
+
+
 
     public double getVelocity() {
         return launcher.getVelocity();
     }
     public double getMinVelocity() {
         return LAUNCHER_MIN_VELOCITY;
+    }
+
+    public boolean atTargetVelocity(){
+        return getVelocity() > getMinVelocity();
     }
 
     private void setVelocity(double velocity) {

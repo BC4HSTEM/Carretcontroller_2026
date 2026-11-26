@@ -8,13 +8,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 import org.firstinspires.ftc.teamcode.robot.RobotOpMode;
 
-@TeleOp(name="Pedro: Command", group="Iterative OpMode")
+@TeleOp(name="Pedro: Command")
 @Config
 public class TeleOp1 extends RobotOpMode {
 
 
     @Override
     public void init() {
+        super.init();
     }
 
     @Override
@@ -30,11 +31,22 @@ public class TeleOp1 extends RobotOpMode {
         if (gamepad1.leftTriggerWasReleased()) robot.intake.on().schedule();
         if (gamepad1.rightTriggerWasPressed()) robot.intake.reverse().schedule();
 
-        if(robot.launcher.getVelocity() > robot.launcher.getMinVelocity()){
-            robot.windmill.on().schedule();
+
+        if(gamepad1.rightBumperWasPressed()){
+            robot.launcher.on();
+            if(robot.launcher.atTargetVelocity()){
+                robot.feeder.on().schedule();
+            }
         }
         else {
-            robot.windmill.off().schedule();
+            robot.feeder.off().schedule();
+        }
+
+        if(gamepad1.dpadUpWasPressed()){
+            robot.pusher.up();
+        }
+        if(gamepad1.dpadDownWasPressed()){
+            robot.pusher.down();
         }
 
 
