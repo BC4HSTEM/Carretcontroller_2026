@@ -17,7 +17,7 @@ public class Robot {
 
     public final Windmill windmill;
     public final Pusher pusher;
-    //public final Flywheel flywheel;
+    public final Launcher launcher;
     //public final Blocker blocker;
     //public final Turret turret;
     //public final TapeSensor tapeSensor;
@@ -33,7 +33,7 @@ public class Robot {
         drivetrain = new DriveTrain(this);
         intake = new Intake(this);
         pusher = new Pusher(this);
-        //flywheel = new Flywheel(this);
+        launcher = new Launcher(this);
         //blocker = new Blocker(this);
         windmill = new Windmill(this);
         //tapeSensor = new TapeSensor(this);

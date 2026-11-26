@@ -42,8 +42,11 @@ public class Launcher {
         else turnOff();
     }
 
-    private double getVelocity() {
+    public double getVelocity() {
         return launcher.getVelocity();
+    }
+    public double getMinVelocity() {
+        return LAUNCHER_MIN_VELOCITY;
     }
 
     private void setVelocity(double velocity) {

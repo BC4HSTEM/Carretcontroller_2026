@@ -30,7 +30,13 @@ public class TeleOp1 extends RobotOpMode {
         if (gamepad1.leftTriggerWasReleased()) robot.intake.on().schedule();
         if (gamepad1.rightTriggerWasPressed()) robot.intake.reverse().schedule();
 
-        if (gamepad1.b) robot.windmill.toggle().schedule();
+        if(robot.launcher.getVelocity() > robot.launcher.getMinVelocity()){
+            robot.windmill.on().schedule();
+        }
+        else {
+            robot.windmill.off().schedule();
+        }
+
 
 
 
