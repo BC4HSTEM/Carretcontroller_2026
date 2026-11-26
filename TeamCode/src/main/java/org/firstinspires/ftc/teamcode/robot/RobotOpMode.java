@@ -14,11 +14,11 @@ public abstract class RobotOpMode extends OpMode {
         robot = new Robot(this);
 
         schedule(
-                robot.drivetrain.periodic()
+                robot.drivetrain.periodic(),
+                robot.intake.periodic(),
+                robot.windmill.periodic(),
+                robot.pusher.periodic()
                 //robot.flywheel.periodic(),
-                //robot.turret.periodic(),
-                //robot.tapeSensor.periodic(),
-                //robot.intake.periodic()
         );
     }
 

@@ -13,7 +13,10 @@ public class Robot {
     public final HardwareMap hardwareMap;
     public final Telemetry telemetry;
     public final DriveTrain drivetrain;
-    //public final Intake intake;
+    public final Intake intake;
+
+    public final Windmill windmill;
+    public final Pusher pusher;
     //public final Flywheel flywheel;
     //public final Blocker blocker;
     //public final Turret turret;
@@ -28,10 +31,11 @@ public class Robot {
         );
 
         drivetrain = new DriveTrain(this);
-        //intake = new Intake(this);
+        intake = new Intake(this);
+        pusher = new Pusher(this);
         //flywheel = new Flywheel(this);
         //blocker = new Blocker(this);
-        //turret = new Turret(this);
+        windmill = new Windmill(this);
         //tapeSensor = new TapeSensor(this);
     }
 }
