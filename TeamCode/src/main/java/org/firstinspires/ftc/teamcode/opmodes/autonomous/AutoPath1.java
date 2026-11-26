@@ -37,9 +37,7 @@ public class AutoPath1 extends LinearOpMode {
         );
     }
 
-    public Command shootPollen(){
-        return null;
-    }
+  
 
     @Override
     public void runOpMode() {
