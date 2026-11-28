@@ -68,8 +68,8 @@ public class BasicOpMode_Iterative extends OpMode {
     private CRServo windMill = null;
     private boolean isSpining = false;
 
-    public static int LAUNCHER_TARGET_VELOCITY = 1070;
-    public static int LAUNCHER_MIN_VELOCITY = 870;
+    public static int LAUNCHER_TARGET_VELOCITY = 1150;
+    public static int LAUNCHER_MIN_VELOCITY = 950;
 
     /*
      * Code to run ONCE when the driver hits INIT
