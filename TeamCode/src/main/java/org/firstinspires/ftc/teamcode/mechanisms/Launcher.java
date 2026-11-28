@@ -24,7 +24,7 @@ public class Launcher {
     public static int LAUNCHER_MIN_VELOCITY = 950;
 
     private boolean on = false;
-    private Launcher.Mode mode = Intake.Mode.OFF;
+    private Launcher.Mode mode = Launcher.Mode.OFF;
 
     private final Telemetry telemetry;
 
@@ -75,7 +75,7 @@ public class Launcher {
 
     public Command periodic() {
         return infinite(() -> {
-            if (on) {
+            if (mode == Launcher.Mode.ON) {
                 setVelocity(LAUNCHER_TARGET_VELOCITY);
             } else {
                 setVelocity(0);

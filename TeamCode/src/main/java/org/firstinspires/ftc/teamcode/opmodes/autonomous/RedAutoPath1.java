@@ -42,7 +42,7 @@ public class RedAutoPath1 extends RobotOpMode {
 
 
                 waitUntil(robot.launcher::atTargetVelocity).then(robot.feeder.on()),
-                
+
                 waitMs(shotsWaitTime), //wait until all 4 shots fired
                 //path 2
                 robot.drivetrain.follow(path2()),
