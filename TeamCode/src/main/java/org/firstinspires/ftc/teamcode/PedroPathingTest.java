@@ -38,7 +38,7 @@ public class PedroPathingTest  extends LinearOpMode {
     @Override
     public void runOpMode() {
         Scheduler.reset();
-        follower = Constants.create(hardwareMap);
+        follower = Constants.createFollower(hardwareMap);
         follower.setPose(start);
         follower.update();
 
